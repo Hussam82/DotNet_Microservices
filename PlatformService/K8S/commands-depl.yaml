@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commands-depl  # The name of the deployment object
+spec:
+  replicas: 1          # We want 1 instance running
+  selector:
+    matchLabels:
+      app: commandservice  # This tag is used by the Service to find these Pods
+  template:
+    metadata:
+      labels:
+        app: commandservice  # The label applied to the actual Pods
+    spec:
+      containers:
+        - name: commandservice
+          image: bob10711/commandservice:latest # The image we just pushed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: commands-clusterip-srv  # IMPORTANT: This name becomes the DNS hostname!
+spec:
+  type: ClusterIP
+  selector:
+    app: commandservice       # Must match the Deployment label
+  ports:
+    - name: commandservice
+      protocol: TCP
+      port: 8080                 # The port other services use to talk to this
+      targetPort: 8080           # The port the container is listening on

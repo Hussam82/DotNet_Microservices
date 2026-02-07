@@ -15,3 +15,17 @@ spec:
       containers:
       - name: platformservice
         image: bob10711/platformservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platforms-clusterip-srv  # IMPORTANT: This name becomes the DNS hostname!
+spec:
+  type: ClusterIP
+  selector:
+    app: platformservice       # Must match the Deployment label
+  ports:
+    - name: platformservice
+      protocol: TCP
+      port: 8080                 # The port other services use to talk to this
+      targetPort: 8080           # The port the container is listening on

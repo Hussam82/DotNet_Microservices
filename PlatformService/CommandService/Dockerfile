@@ -14,9 +14,8 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-
 # Copy the build output from the first stage
 COPY --from=build-env /app/out .
 
 # Start the application
-ENTRYPOINT ["dotnet", "PlatformService.dll"]
+ENTRYPOINT ["dotnet", "CommandService.dll"]
