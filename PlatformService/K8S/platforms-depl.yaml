@@ -29,3 +29,7 @@ spec:
       protocol: TCP
       port: 8080                 # The port other services use to talk to this
       targetPort: 8080           # The port the container is listening on
+    - name: platformgrpc
+      protocol: TCP
+      port: 666
+      targetPort: 666
